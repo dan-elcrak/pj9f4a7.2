@@ -7,16 +7,15 @@ Vagrant.configure("2") do |config|
     v.memory = 2048
     v.cpus = 2
     v.customize ['modifyvm', :id, '--clipboard', 'bidirectional']
-    confing.vm.synced_folder "../codi" "/var/www/html"
   end
+  config.vm.synced_folder "../codi", "/var/www/html" #Comparticio de carpeta
 
-  config.vm.network "public_network", #Per treballar amb adaptador pont
-
+  config.vm.network "public_network" #Per treballar amb adaptador pont
   config.vm.network "forwarded_port", guest: 80, host: 8000
   config.vm.network "forwarded_port", guest: 443, host: 8443
   
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update -y
+  config.vm.provision "shell", inline: <<-SHELL #Programes que volem installar 
+    sudo apt-get update -y #y es per confirmar la instalacio automaticament (yes)
     sudo apt-get install -y net-tools
     sudo apt-get install -y apache2 apache2-doc
     sudo apt-get install -y libapache2-mod-php
@@ -25,7 +24,7 @@ Vagrant.configure("2") do |config|
     sudo apt-get install -y mariadb-client
     sudo apt-get install -y php7.4-mysql
     sudo apt-get install -y composer
-    sudo apt-get install -y aptitude
+    sudo apt-get install -y aptitudedp
 
   SHELL
 
